@@ -45,6 +45,47 @@ body {
   transform: translateY(-2px);
 }
 
+/* Keeps the eye icon inside the password field. */
+.password-container {
+  position: relative;
+}
+
+.login-container .password-container input {
+  padding-right: 52px;
+}
+
+.login-container .password-container .password-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 52px;
+  height: 48px;
+  margin: 0;
+  padding: 0;
+  color: #667eea;
+  background: transparent;
+  box-shadow: none;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.login-container .password-container .password-toggle:hover {
+  color: #764ba2;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.password-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .login-container button {
   width: 100%;
   padding: 14px;
