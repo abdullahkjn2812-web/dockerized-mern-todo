@@ -6,8 +6,31 @@ function Todo() {
   const [editIndex, SetEditIndex] = useState(null);
   const [input, SetInput] = useState("");
   const [search, SetSearch] = useState("");
+  const [profile, SetProfile] = useState(null);
 
   const navigate = useNavigate();
+
+  const completedTodos = todos.filter((todo) => todo.completed);
+  const pendingTodos = todos.filter((todo) => !todo.completed);
+
+  const handleProfile = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/profile", {
+        headers: getAuthHeaders(),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+      const data = await response.json();
+      SetProfile(data);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleProfile();
+  }, []);
 
   const handleLougout = () => {
     localStorage.removeItem("token");
