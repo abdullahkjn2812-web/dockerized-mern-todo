@@ -1,36 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Todo() {
   const [todos, SetTodos] = useState([]);
   const [editIndex, SetEditIndex] = useState(null);
   const [input, SetInput] = useState("");
   const [search, SetSearch] = useState("");
-  const [profile, SetProfile] = useState(null);
 
   const navigate = useNavigate();
-
-  const completedTodos = todos.filter((todo) => todo.completed);
-  const pendingTodos = todos.filter((todo) => !todo.completed);
-
-  const handleProfile = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/profile", {
-        headers: getAuthHeaders(),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch profile");
-      }
-      const data = await response.json();
-      SetProfile(data);
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    }
-  };
-
-  useEffect(() => {
-    handleProfile();
-  }, []);
 
   const handleLougout = () => {
     localStorage.removeItem("token");
@@ -43,7 +21,7 @@ function Todo() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:5000/todos/${id}`, {
+      await fetch(`${API_URL}/todos/${id}`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
@@ -73,7 +51,7 @@ function Todo() {
       // Edit mode
       console.log("Edit Mode");
 
-      const response = await fetch(`http://localhost:5000/todos/${editIndex}`, {
+      const response = await fetch(`${API_URL}/todos/${editIndex}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +74,7 @@ function Todo() {
 
       console.log("Add Mode");
       const response = await fetch(
-        "http://localhost:5000/todos",
+        `${API_URL}/todos`,
         // response check
         {
           method: "POST",
@@ -123,7 +101,7 @@ function Todo() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/todos", {
+    fetch(`${API_URL}/todos`, {
       headers: getAuthHeaders(),
     })
       .then((res) => res.json())
@@ -133,7 +111,7 @@ function Todo() {
 
   const ToggleComplete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/todos/${id}`, {
+      const response = await fetch(`${API_URL}/todos/${id}`, {
         method: "PATCH",
         headers: getAuthHeaders(),
       });
@@ -149,7 +127,7 @@ function Todo() {
   const handleClearAll = async () => {
     const confirmation = window.confirm("Are you sure ?");
     if (confirmation) {
-      await fetch(`http://localhost:5000/todos/`, {
+      await fetch(`${API_URL}/todos/`, {
         method: "DELETE",
         headers: getAuthHeaders(),
       });
