@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 
 function Profile() {
   const [data, setData] = useState(null);
@@ -19,7 +20,7 @@ function Profile() {
 
         console.log("TOKEN", token);
 
-        const response = await fetch("http://localhost:5000/auth/profile", {
+        const response = await fetch(`${API_URL}/auth/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
