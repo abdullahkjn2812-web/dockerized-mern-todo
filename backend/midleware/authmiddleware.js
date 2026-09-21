@@ -8,7 +8,7 @@ const verifyToken = (req, res, next) => {
   }
 
   // Extract token from "Bearer <token>" format
-  const token = authHeader.startsWith("Bearer ")
+  const token = authHeader.startsWith("Bearer")
     ? authHeader.slice(7)
     : authHeader;
 
